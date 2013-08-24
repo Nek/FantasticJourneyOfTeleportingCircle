@@ -34,6 +34,8 @@ class AssetData {
 			type.set ("gfx/preloader/haxepunk.png", Reflect.field (AssetType, "image".toUpperCase ()));
 			className.set ("font/04B_03__.ttf", nme.NME_font_04b_03___ttf);
 			type.set ("font/04B_03__.ttf", Reflect.field (AssetType, "font".toUpperCase ()));
+			className.set ("sfx/aumloop.mp3", nme.NME_sfx_aumloop_mp3);
+			type.set ("sfx/aumloop.mp3", Reflect.field (AssetType, "music".toUpperCase ()));
 			className.set ("font/04B_03__.ttf", nme.NME_font_5);
 			type.set ("font/04B_03__.ttf", Reflect.field (AssetType, "font".toUpperCase ()));
 			
@@ -56,4 +58,5 @@ class NME_gfx_debug_console_play_png extends flash.display.BitmapData { public f
 class NME_gfx_debug_console_step_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class NME_gfx_preloader_haxepunk_png extends flash.display.BitmapData { public function new () { super (0, 0); } }
 class NME_font_04b_03___ttf extends flash.text.Font { }
+class NME_sfx_aumloop_mp3 extends flash.media.Sound { }
 class NME_font_5 extends flash.text.Font { }

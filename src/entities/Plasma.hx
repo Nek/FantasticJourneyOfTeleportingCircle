@@ -59,14 +59,35 @@ class Plasma extends Entity
         palette_b = [];
         var x:Int, y:Int;
         for( x in 0...256) {
-        palette_r [x] = 0x10000 * Std.int(128.0 + 128 * Math.sin(3.1415 * x / 16.0));
-        palette_g [x] =   0x100 * Std.int(128.0 + 128 * Math.sin(3.1415 * x / 128.0));
-        palette_b [x] =       1 * 0;
+            palette_r [x] = 0x100000 * Std.int(128.0 + 128 * Math.sin(3.1415 * x / 32.0));
+            palette_g [x] =   0x100 * Std.int(128.0 + 128 * Math.sin(3.1415 * x / 128.0));
+            palette_b [x] =     0x1 * Std.int(128.0 + 128 * Math.sin(3.1415 * x / 1.0));
         }
+
+
+//        for (i in 0...64) {
+//            palette_r [i] = 255;
+//            palette_g [i] = i * 4;
+//            palette_b [i] = 255 - (i * 4);
+//
+//            palette_r [i + 64] = 255 - (i * 4);
+//            palette_g [i + 64] = 255;
+//            palette_b [i + 64] = i * 4;
+//
+//            palette_r [i + 128] = 0;
+//            palette_g [i + 128] = 255 - (i * 4);
+//            palette_b [i + 128] = 255;
+//
+//            palette_r [i + 192] = i * 4;
+//            palette_g [i + 192] = 0;
+//            palette_b [i + 192] = 255;
+//        }
+
+
         PointArrayA = [];
         PointArrayB = [];
         for (i in 0...3) {
-            PointArrayA[i] = new Point(Math.random()*w,Math.random()*h);
+            PointArrayA[i] = new Point(Math.random() * w,Math.random() * h);
             PointArrayB[i] = new Point(Math.random() * 10 - 5, Math.random() * 10 - 5);
         }
         canvas = new BitmapData(w, h, false, 0x00FF0000);
@@ -86,7 +107,7 @@ class Plasma extends Entity
         canvas.colorTransform (canvas.rect, ct);
 
         canvas.paletteMap(canvas, canvas.rect, canvas.rect.topLeft, palette_r, palette_g, palette_b);
-        var shift : Int = 5;
+        var shift : Int = 0;
         while (shift -- > 0) {
             palette_r.push (palette_r.shift ());
             palette_g.push (palette_g.shift ());

@@ -29,10 +29,16 @@ class Tri extends Entity
         motion.start();
     }
 
+    private var triangle:Sprite;
+    private var noiseBitmapData:BitmapData;
+
     public function new(x:Int, y:Int)
     {
         super(x, y);
 
+        triangle = new Sprite();
+
+        noiseBitmapData = new BitmapData(200,200);
 
         bitmapData = new BitmapData(w, h, true, 0x00ffffff);
 
@@ -53,20 +59,18 @@ class Tri extends Entity
 
     }
 
+    private var side = 200;
+
     public override function update() {
         super.update();
 
-
-        var triangle:Sprite = new Sprite();
-        var noiseBitmapData = new BitmapData(200,200);
         noiseBitmapData.noise(t,0,45,7,true);
-        var side = 200;
+        triangle.graphics.clear();
         triangle.graphics.beginBitmapFill(noiseBitmapData);
         triangle.graphics.moveTo(.5*side,0);
         triangle.graphics.lineTo(1*side,0.8660254037844387*side);
         triangle.graphics.lineTo(0,0.8660254037844387*side);
         triangle.graphics.moveTo(0,0);
-        triangle.graphics.endFill();
         triangle.graphics.endFill();
 
         bitmapData.draw(triangle);
