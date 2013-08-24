@@ -18,14 +18,14 @@ class Plasma extends Entity
 
     private var w:Int = 640;
     private var h:Int = 480;
-    private var m:Int = 8; // maze size
+    private var m:Int = 10; // maze size
     private var waveSize:Float = 2.5;
 
     private var tt:Float = 0;
     private var lt:Array<Float>; // lookup table
     private var colorList:Array<Int>;
     private var colorLength:Int;
-    private var lookupDens:Int = 1000;
+    private var lookupDens:Int = 800;
 
     private function rgb(r,g,b):UInt {
         return ( ( r << 16 ) | ( g << 8 ) | b );

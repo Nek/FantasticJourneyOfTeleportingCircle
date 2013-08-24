@@ -46,7 +46,7 @@ class Tri extends Entity
 
 
         motion = new CircularMotion(restartMotion);
-        motion.setMotion(HXP.width/2, HXP.height/2,30,Math.PI*2,true,10);
+        motion.setMotion(HXP.width/2, HXP.height/2,30,Math.PI*2,false,10);
 
         this.addTween(motion);
 
