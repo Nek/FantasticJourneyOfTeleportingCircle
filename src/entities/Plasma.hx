@@ -1,5 +1,7 @@
 package entities;
 
+import flash.geom.ColorTransform;
+import flash.geom.Point;
 import flash.geom.Rectangle;
 import flash.geom.Vector3D;
 import flash.display.BitmapData;
@@ -10,131 +12,15 @@ import com.haxepunk.HXP;
 
 class Plasma extends Entity
 {
-    private var bitmapData:BitmapData;
 
     private var canv: Canvas;
-    private var time: Float;
-
-
-    private var w:Int = 640;
-    private var h:Int = 480;
-    private var m:Int = 10; // maze size
-    private var waveSize:Float = 2.5;
-
-    private var tt:Float = 0;
-    private var lt:Array<Float>; // lookup table
-    private var colorList:Array<Int>;
-    private var colorLength:Int;
-    private var lookupDens:Int = 800;
-
-    private function rgb(r,g,b):UInt {
-        return ( ( r << 16 ) | ( g << 8 ) | b );
-    }
-
-    private function createLookup()
-    {
-        lt = [];
-        colorList = [];
-        for (i in 0...64) {
-            colorList[i] = rgb(255, i*4, 255 - (i * 4));
-            colorList[i + 64] = rgb(255 - (i * 4), 255, i*4);
-            colorList[i + 128] = rgb(0, 255 - (i * 4), 255);
-            colorList[i + 192] = rgb(i*4, 0, 255);
-        }
-
-        colorLength = colorList.length;
-        ms2 = Std.int(lookupDens*.5);
-        v1 = new Vector3D(0, 0);
-        v2 = new Vector3D(0, 0);
-
-        var chunk:Float = (Math.PI) / lookupDens;
-
-        for (i in 0...lookupDens )
-        {
-            // make sinus move between 0 and 1;
-            var s = Math.sin(Math.PI) + Math.sin(chunk * i);
-            if (s > 1) { s = 1; }
-            if (s < 0) { s = 0; }
-
-            lt.push(s);
-        }
-
-    }
-
-    private var ty:Int;
-    private function animate()
-    {
-
-        var ty = 0;
-        do {
-            drawLine(ty);
-            ty+=m;
-        } while( ty < h );
-    }
-
-    private var ms1:Float = 0;
-    private var ms2:Float;
-    private var v1:Vector3D;
-    private var v2:Vector3D;
-    private var dist:Vector3D;
-    private var xpr:Float;
-    private var ypr:Float;
-    private var s:Float;
-    private var s2:Float;
-    private var tx:Int;
-    private var sGem:Float;
-    private var colNum:Int;
-
-    private function drawLine(ypos:Float)
-    {
-        ms1 += .015;
-        ms2 += .008;
-
-        tt += .06;
-
-        var tx = 0;
-        do
-        {
-
-            xpr = getSinus(ms1);
-            ypr = getSinus(ms2);
-
-            v1.x = (w*xpr)+(10*getSinus(ms1));
-            v1.y = (h*ypr)+(10*getSinus(ms2));
-
-            v2.x = tx;
-            v2.y = ypos;
-
-            dist = v2.subtract(v1);
-
-            s = getSinus(Std.int((dist.length) * waveSize));
-            s2 = 1.0-(getSinus(Std.int((tx+tt) * waveSize)));
-
-            sGem = (s - s2);
-            if (sGem < 0) { sGem = 0; }
-
-            colNum = Std.int(colorLength * sGem);
-
-            bitmapData.fillRect(new Rectangle(tx, ypos, m, m), colorList[colNum]);
-
-            tx+=m;
-        } while (tx < w);
-    }
-
-    private function getSinus(angle:Float):Float
-    {
-        var modAngle = Std.int(angle) % lookupDens;
-
-        return lt[modAngle];
-    }
+    private var w = 640;
+    private var h = 480;
+    private var t = 0;
 
     public function new(x:Int, y:Int)
     {
         super(x, y);
-
-        createLookup();
-
-        bitmapData = new BitmapData(w, h, false, 0x0);
 
         canv = new Canvas(w,h);
 
@@ -142,16 +28,70 @@ class Plasma extends Entity
         canv.x = -canv.width/2;
         canv.y = -canv.height/2;
 
-
+        initPlasma();
 
     }
 
     public override function update() {
         super.update();
 
-        animate();
 
-        canv.draw(0,0,bitmapData);
+        if (t == 0) {
+            updatePlasma();
+            canv.draw(0,0,canvas);
+        }
+
+        t += 1;
+        t = t % 4;
+    }
+
+    private var canvas:BitmapData;
+    private var random:Int = 0;
+    private var palette_r:Array<Int>;
+    private var palette_g:Array<Int>;
+    private var palette_b:Array<Int>;
+    private var PointArrayA:Array<Point>;
+    private var PointArrayB:Array<Point>;
+    private function initPlasma() {
+        ct = new ColorTransform (1.7, 1.7, 1.7, 1, -100, -100, -100);
+        palette_r = [];
+        palette_g = [];
+        palette_b = [];
+        var x:Int, y:Int;
+        for( x in 0...256) {
+        palette_r [x] = 0x10000 * Std.int(128.0 + 128 * Math.sin(3.1415 * x / 16.0));
+        palette_g [x] =   0x100 * Std.int(128.0 + 128 * Math.sin(3.1415 * x / 128.0));
+        palette_b [x] =       1 * 0;
+        }
+        PointArrayA = [];
+        PointArrayB = [];
+        for (i in 0...3) {
+            PointArrayA[i] = new Point(Math.random()*w,Math.random()*h);
+            PointArrayB[i] = new Point(Math.random() * 10 - 5, Math.random() * 10 - 5);
+        }
+        canvas = new BitmapData(w, h, false, 0x00FF0000);
+    }
+    private var ct:ColorTransform;
+    private function updatePlasma() {
+//random = Math.random() * 10000
+        var i:Int = 0;
+        while (i < 3) {
+            PointArrayA[i].x = PointArrayA[i].x + PointArrayB[i].x;
+            PointArrayA[i].y = PointArrayA[i].y + PointArrayB[i].y;
+            ++i;
+        }
+        canvas.perlinNoise(w, h, 3  /* +Std.int (mouseX / 100)*/, random, false, true, 1, false, PointArrayA);
+        canvas.copyChannel (canvas, canvas.rect, canvas.rect.topLeft, 1, 2);
+        canvas.copyChannel (canvas, canvas.rect, canvas.rect.topLeft, 1, 4);
+        canvas.colorTransform (canvas.rect, ct);
+
+        canvas.paletteMap(canvas, canvas.rect, canvas.rect.topLeft, palette_r, palette_g, palette_b);
+        var shift : Int = 5;
+        while (shift -- > 0) {
+            palette_r.push (palette_r.shift ());
+            palette_g.push (palette_g.shift ());
+            palette_b.push (palette_b.shift ());
+        }
     }
 
 }
