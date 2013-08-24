@@ -11,6 +11,7 @@ import flash.display.Bitmap;
 import com.haxepunk.graphics.Canvas;
 import com.haxepunk.Entity;
 import com.haxepunk.HXP;
+import com.haxepunk.tweens.motion.CircularMotion;
 
 class Tri extends Entity
 {
@@ -21,6 +22,12 @@ class Tri extends Entity
     private var h:Int = 200;
 
     private var t:Int = 0;
+
+    private var motion:CircularMotion;
+
+    private function restartMotion(event:Dynamic) {
+        motion.start();
+    }
 
     public function new(x:Int, y:Int)
     {
@@ -35,6 +42,13 @@ class Tri extends Entity
         canv.x = -canv.width/2;
         canv.y = -canv.height/2;
         canv.fill(new Rectangle(0,0,w,h), 0, 0);
+
+
+
+        motion = new CircularMotion(restartMotion);
+        motion.setMotion(HXP.width/2, HXP.height/2,30,Math.PI*2,true,10);
+
+        this.addTween(motion);
 
 
     }
@@ -60,6 +74,11 @@ class Tri extends Entity
         t += 1;
 
         canv.draw(0,0,bitmapData);
+
+        motion.update();
+
+        this.x = motion.x;
+        this.y = motion.y;
     }
 
 }
