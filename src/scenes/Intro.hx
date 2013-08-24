@@ -1,5 +1,6 @@
 package scenes;
 
+import entities.Plasma;
 import entities.Tri;
 import com.haxepunk.Scene;
 import com.haxepunk.graphics.Canvas;
@@ -17,6 +18,7 @@ class Intro extends Scene
   
  public override function begin()
  {
+    add(new Plasma(Math.floor(HXP.width/2), Math.floor(HXP.height/2)));
     add(new Tri(Math.floor(HXP.width/2), Math.floor(HXP.height/2)));
  }
 
