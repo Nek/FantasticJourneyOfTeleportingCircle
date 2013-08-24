@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		
+		<title>LD27</title>
+		
+		<script type="text/javascript" src="swfobject.js"></script>
+		<script type="text/javascript">
+			
+			swfobject.embedSWF ("Main.swf", "nme-application", "640", "480", "11", "expressInstall.swf", {});
+		</script>
+		
+		<style>
+			html, body { background: #000}
+			#nme-application	{ width:640px; height:480px; position: relative; left: -320px; top: -240px;}
+			body					{ margin:0; padding:0; overflow:hidden; }
+			#wrapper {position: absolute; top:50%; left:50%;}
+			
+		</style>
+		
+	</head>
+	
+	<body>
+		
+		<div id="wrapper"><div id="nme-application" /></div>
+		
+	</body>
+	
+</html>
