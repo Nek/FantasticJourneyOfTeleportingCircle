@@ -1,5 +1,7 @@
 package scenes;
 
+import entities.Restart;
+import entities.Continue;
 import Math;
 import entities.Skull;
 import com.haxepunk.graphics.Image;
@@ -30,7 +32,13 @@ class GameOver extends PlasmaScene
     public override function begin()
     {
         super.begin();
-        add(new Skull(Math.round(HXP.halfWidth), Math.round(HXP.halfHeight)));
+        add(new Skull(Math.round(HXP.halfWidth), Math.round(HXP.halfHeight) - 50));
+        add(new Continue(100,340));
+        add(new Restart(540,340));
+        var curs =  new Cursor(Math.round(HXP.width/2), Math.round(HXP.height/2));
+        var circle:Circle = new Circle(Math.round(HXP.width/2), Math.round(HXP.height/2), curs, false);
+        add(curs);
+        add(circle);
     }
 
     public function nextScene() {

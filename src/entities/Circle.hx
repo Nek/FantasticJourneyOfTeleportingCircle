@@ -24,16 +24,18 @@ class Circle extends Entity
     }
 
     private var text:Text;
+    private var teleport:Bool;
 
-    public function new(x:Int, y:Int, cursor:Cursor)
+    public function new(x:Int, y:Int, cursor:Cursor, ?teleport = true)
     {
         super(x, y);
+        this.teleport = teleport;
 
         type = "circle";
 
         timer = new Alarm(1, secondPassed, TweenType.Looping);
         addTween(timer);
-        timer.start();
+        if (teleport) timer.start();
 
         this.cursor = cursor;
 
@@ -44,32 +46,43 @@ class Circle extends Entity
 
         mask = new com.haxepunk.masks.Circle(15, Math.round(graphic.x), Math.round(graphic.y));
 
+        if (teleport) {
         text = new Text("10");
-        text.size = 24;
+        text.size = 18;
         text.color = 0x000000;
 
         addGraphic(text);
-
+        }
     }
 
     public override function moveCollideY(e:Entity)
     {
-        HXP.scene = new scenes.GameOver();
+        switch(e.type) {
+            case "hazard": cast(HXP.engine, Main).dead();
+            case "continue": cast(HXP.engine, Main).cont();
+            case "restart": cast(HXP.engine, Main).rest();
+        }
+
         return true;
     }
 
     public override function moveCollideX(e:Entity) {
-        HXP.scene = new scenes.GameOver();
+        switch(e.type) {
+            case "hazard": cast(HXP.engine, Main).dead();
+            case "continue": cast(HXP.engine, Main).cont();
+            case "restart": cast(HXP.engine, Main).rest();
+        }
         return true;
     }
 
 
     public override function update() {
 
+    if (teleport) {
         text.x = -text.textWidth/2+2;
         text.y = -text.textHeight/2+3;
-
-        moveBy((cursor.x - this.x) / 15, (cursor.y - this.y) / 15, "hazard", true);
+    }
+        moveBy((cursor.x - this.x) / 10, (cursor.y - this.y) / 10, ["hazard","continue","restart"], true);
 
     }
 }

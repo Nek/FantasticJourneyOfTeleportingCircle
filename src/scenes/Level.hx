@@ -1,5 +1,8 @@
 package scenes;
 
+import entities.generators.SmartSaws;
+import entities.generators.AnnoSaws;
+import entities.generators.CenterSaws;
 import Types.Hazards;
 import Types.Hazard;
 import entities.generators.HeadSpikes;
@@ -32,22 +35,23 @@ class Level extends Scene
 
     }
 
-
-
-
-
     public override function begin()
     {
+
+        var curs =  new Cursor(Math.round(HXP.width/2), Math.round(HXP.height/2));
+        var circle:Circle = new Circle(Math.round(HXP.width/2), Math.round(HXP.height/2), curs);
 
         for (h in hazards) {
             switch(h) {
                 case Hazard.HeadSpikes(interv,spd,inc): add(new HeadSpikes(interv, spd, inc));
+                case Hazard.CenterSaws(interv,spd,inc): add(new CenterSaws(interv, spd, inc, circle));
+                case Hazard.SmartSaws(interv,spd,inc): add(new SmartSaws(interv, spd, inc, circle));
+                case Hazard.AnnoSaws(interv,spd,inc): add(new AnnoSaws(interv, spd, inc, circle));
             }
         }
 
-        var curs =  new Cursor(Math.round(HXP.width/2), Math.round(HXP.height/2));
         add(curs);
-        add(new Circle(Math.round(HXP.width/2), Math.round(HXP.height/2), curs));
+        add(circle);
     }
 
     public override function update() {

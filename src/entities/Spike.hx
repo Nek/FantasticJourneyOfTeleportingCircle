@@ -24,11 +24,22 @@ class Spike extends Entity
         //graphic.x = -img.width/2;
         //graphic.y = -img.height/2;
 
-        mask = new Polygon([new Point(0, 0), new Point(30,0), new Point(15,86)]);
+        mask = new Polygon([new Point(0, 0), new Point(15,0), new Point(15/2,60)]);
+    }
+
+    public override function moveCollideY(e:Entity)
+    {
+        cast(HXP.engine, Main).dead();
+        return true;
+    }
+
+    public override function moveCollideX(e:Entity) {
+        cast(HXP.engine, Main).dead();
+        return true;
     }
 
     public override function update() {
         super.update();
-        moveBy(0, speed*HXP.elapsed);
+        moveBy(0, speed*HXP.elapsed, "circle");
     }
 }
