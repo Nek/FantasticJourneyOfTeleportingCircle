@@ -9,8 +9,8 @@ enum Hazard {
 typedef Hazards = Array<Hazard>;
 
 enum Screen {
-    Level(hazards:Hazards);
-    Hint(pic:String, snd:String);
+    Level(hazards:Hazards, speed:Float);
+    Hint(pic:Array<String>, snd:String);
     GameWon;
     GameOver;
 }

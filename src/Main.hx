@@ -18,11 +18,15 @@ class Main extends Engine
 		HXP.console.enable();
 #end
         screens = [
-//            Hint("01mouse","aumloop"),
-//            Level([])
-//            Hint("02headspike","aumloop"),
-//            Level([HeadSpikes(.2,150,10)]), // 1
-//            Level([CenterSaws(.2,100,0)]), // 2
+//            Hint(["01mouse", "spike"],"aumloop"),
+//            Level([HeadSpikes(.2,100,0)], 10), // 1
+//            Level([HeadSpikes(.2,150,10)], 10), // 1
+//            Level([HeadSpikes(.2,200,20)], 10), // 1
+
+//            Hint(["csaw"],"aumloop"),
+//            Level([CenterSaws(.4,100,0)],8.0), // 2
+//            Level([CenterSaws(.4,100,5)],8.0), // 2
+            Level([SmartSaws(.4,100,5)],8.0), // 2
 //            Level([SmartSaws(.2,100,0)]), // 3
 //            Level([AnnoSaws(.4,200,0)]), // 4
 //            Level([CenterSaws(.2,150,0), HeadSpikes(.4,50 ,10)]), // 5
@@ -53,10 +57,12 @@ class Main extends Engine
         startScreen(screens[curr]);
     }
 
+    public var speed = 10;
+
     public function startScreen(screen:Screen) {
         switch(screen) {
             case Hint(p,s): HXP.scene = new Hint(p,s);
-            case Level(hazards): HXP.scene = new Level(hazards);
+            case Level(hazards, sp): HXP.scene = new Level(hazards, sp);
             case GameWon: HXP.scene = new GameWon();
             case GameOver: HXP.scene = new GameOver();
         }

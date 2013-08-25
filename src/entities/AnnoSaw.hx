@@ -32,7 +32,7 @@ class AnnoSaw extends Entity
         graphic.x = -img.width/2;
         graphic.y = -img.height/2;
 
-        mask = new Hitbox(36, 36, -18, -18);
+        mask = new Hitbox(26, 26, -13, -13);
 
         var a = Math.atan2(240-y, 320-x);
 

@@ -26,6 +26,8 @@ class Circle extends Entity
     private var text:Text;
     private var teleport:Bool;
 
+    public var speed = 10.0;
+
     public function new(x:Int, y:Int, cursor:Cursor, ?teleport = true)
     {
         super(x, y);
@@ -82,7 +84,7 @@ class Circle extends Entity
         text.x = -text.textWidth/2+2;
         text.y = -text.textHeight/2+3;
     }
-        moveBy((cursor.x - this.x) / 10, (cursor.y - this.y) / 10, ["hazard","continue","restart"], true);
+        moveBy((cursor.x - this.x) / speed, (cursor.y - this.y) / speed, ["hazard","continue","restart"], true);
 
     }
 }

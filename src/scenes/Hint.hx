@@ -16,13 +16,15 @@ import com.haxepunk.HXP;
 class Hint extends PlasmaScene
 {
 
-    private var hint: String;
+    private var hints: Array<String>;
     private var sound: String;
+    private var curr:Int = 0;
 
- public function new(hint:String, sound: String)
+
+ public function new(hints:Array<String>, sound: String)
  {
 
-    this.hint = hint;
+    this.hints = hints;
     this.sound = sound;
 
     super(3,1/5);
@@ -40,7 +42,7 @@ class Hint extends PlasmaScene
      add(tri);
      sfx = new Sfx(Assets.getSound("sfx/" + sound + ".mp3"));
      sfx.play(1,0,true);
-     tri.showHint(hint, nextScene.bind());
+     tri.showHint(hints[curr], nextScene.bind());
 
      var curs =  new Cursor(Math.round(HXP.width/2), Math.round(HXP.height/2));
      var circle:Circle = new Circle(Math.round(HXP.width/2), Math.round(HXP.height/2), curs, false);
@@ -52,8 +54,13 @@ class Hint extends PlasmaScene
 
 
  public function nextScene() {
-     sfx.stop();
-     cast(HXP.engine, Main).nextScreen();
+    curr ++;
+    if ( curr == hints.length ) {
+        sfx.stop();
+        cast(HXP.engine, Main).nextScreen();
+    } else {
+        tri.showHint(hints[curr], nextScene.bind());
+    }
  }
 
  public override function update() {

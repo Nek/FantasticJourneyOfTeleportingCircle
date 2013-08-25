@@ -24,7 +24,7 @@ class SmartSaw extends Entity
 
         this.speed = speed;
 
-        var img = new Image("gfx/saw.png");
+        var img = new Image("gfx/csaw.png");
         graphic = img;
         graphic.x = -img.width/2;
         graphic.y = -img.height/2;

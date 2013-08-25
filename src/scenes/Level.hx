@@ -25,13 +25,15 @@ class Level extends Scene
 
 
     private var hazards: Hazards;
+    private var speed: Float = 10;
 
-    public function new(hazards:Hazards)
+    public function new(hazards:Hazards, sp:Float)
     {
 
         super();
 
         this.hazards = hazards;
+        this.speed = sp;
 
     }
 
@@ -40,6 +42,7 @@ class Level extends Scene
 
         var curs =  new Cursor(Math.round(HXP.width/2), Math.round(HXP.height/2));
         var circle:Circle = new Circle(Math.round(HXP.width/2), Math.round(HXP.height/2), curs);
+        circle.speed = speed;
 
         for (h in hazards) {
             switch(h) {
