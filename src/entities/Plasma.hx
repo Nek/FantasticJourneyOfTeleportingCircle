@@ -20,15 +20,17 @@ class Plasma extends Entity
     private var t = 0;
     private var octaves = 3;
     private var speedMod = 1/3;
+    private var fractal = true;
 
-    public function new(x:Int, y:Int, octaves, speedMod)
+    public function new(x:Int, y:Int, octaves, speedMod, ?fractal = true)
     {
         super(x, y);
 
         this.octaves = octaves;
         this.speedMod = speedMod;
+        this.fractal = fractal;
 
-        canv = new Canvas(w*2,h*2);
+        canv = new Canvas(w*2, h*2);
 
         addGraphic(canv);
         canv.x = -canv.width/2;
@@ -117,7 +119,7 @@ class Plasma extends Entity
             PointArrayA[i].y = PointArrayA[i].y + (PointArrayB[i].y * this.speedMod);
             ++i;
         }
-        canvas.perlinNoise(w, h, this.octaves  /* +Std.int (mouseX / 100)*/, random, false, true, 1, false, PointArrayA);
+        canvas.perlinNoise(w, h, this.octaves  /* +Std.int (mouseX / 100)*/, random, false, fractal, 1, false, PointArrayA);
         canvas.copyChannel (canvas, canvas.rect, canvas.rect.topLeft, 1, 2);
         canvas.copyChannel (canvas, canvas.rect, canvas.rect.topLeft, 1, 4);
         canvas.colorTransform (canvas.rect, ct);

@@ -9,13 +9,13 @@ import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
 
-class SpikeAttack extends Entity
+class HeadSpikes extends Entity
 {
 
 
     private var spikeAttack:Alarm;
-    private var speed = 200;
-    private var increase = 20;
+    private var speed = 200.0;
+    private var increase = 20.0;
 
     public function new(interval, speed, increase)
     {

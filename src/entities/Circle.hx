@@ -19,7 +19,7 @@ class Circle extends Entity
         time += 1;
         if (time <= 10) text.text = "0"+Std.string(10 - time);
         if (time == 10) {
-            cast(HXP.engine, Main).nextLevel();
+            cast(HXP.engine, Main).nextScreen();
         }
     }
 
@@ -37,15 +37,15 @@ class Circle extends Entity
 
         this.cursor = cursor;
 
-        var img = Image.createCircle(30);
+        var img = Image.createCircle(15);
         graphic = img;
         graphic.x = -img.width/2;
         graphic.y = -img.height/2;
 
-        mask = new com.haxepunk.masks.Circle(30, Math.round(graphic.x), Math.round(graphic.y));
+        mask = new com.haxepunk.masks.Circle(15, Math.round(graphic.x), Math.round(graphic.y));
 
         text = new Text("10");
-        text.size = 36;
+        text.size = 24;
         text.color = 0x000000;
 
         addGraphic(text);

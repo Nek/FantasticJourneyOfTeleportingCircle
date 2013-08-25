@@ -1,6 +1,8 @@
 package scenes;
 
-import entities.generators.SpikeAttack;
+import Types.Hazards;
+import Types.Hazard;
+import entities.generators.HeadSpikes;
 import entities.Spike;
 import entities.Circle;
 import entities.Cursor;
@@ -15,15 +17,18 @@ import com.haxepunk.Scene;
 import com.haxepunk.graphics.Canvas;
 import com.haxepunk.HXP;
 
-class Level1 extends Scene
+class Level extends Scene
 {
 
 
+    private var hazards: Hazards;
 
-    public function new()
+    public function new(hazards:Hazards)
     {
 
         super();
+
+        this.hazards = hazards;
 
     }
 
@@ -34,8 +39,11 @@ class Level1 extends Scene
     public override function begin()
     {
 
-
-        add(new SpikeAttack(.3, 200, 20));
+        for (h in hazards) {
+            switch(h) {
+                case Hazard.HeadSpikes(interv,spd,inc): add(new HeadSpikes(interv, spd, inc));
+            }
+        }
 
         var curs =  new Cursor(Math.round(HXP.width/2), Math.round(HXP.height/2));
         add(curs);

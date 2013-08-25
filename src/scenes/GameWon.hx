@@ -1,38 +1,43 @@
 package scenes;
 
+import entities.Box;
 import com.haxepunk.Tween;
 import com.haxepunk.tweens.misc.Alarm;
 import com.haxepunk.tweens.misc.NumTween;
 import openfl.Assets;
 import com.haxepunk.Sfx;
 import entities.Plasma;
-import entities.Tri;
 import com.haxepunk.Scene;
 import com.haxepunk.graphics.Canvas;
 import com.haxepunk.HXP;
 
-class Intro extends PlasmaScene
+class GameWon extends PlasmaScene
 {
+
+    private var hint: String;
+    private var sound: String;
 
  public function new()
  {
 
-    super(3,1/5);
+    this.hint = "heart";
+    this.sound = "aumloop";
+
+    super(2,1/5,false);
 
  }
 
-
-    private var tri:Tri;
+    private var box:Box;
     private var sfx:Sfx;
 
  public override function begin()
  {
     super.begin();
-     tri = new Tri(Math.floor(HXP.width/2), Math.floor(HXP.height/2));
-     add(tri);
-     sfx = new Sfx(Assets.getSound("sfx/aumloop.mp3"));
+     box = new Box(Math.floor(HXP.width/2), Math.floor(HXP.height/2));
+     add(box);
+     sfx = new Sfx(Assets.getSound("sfx/" + sound + ".mp3"));
      sfx.play(1,0,true);
-     tri.showHint("01mouse", nextScene.bind());
+     box.showHint(hint);
 
  }
 
@@ -40,7 +45,7 @@ class Intro extends PlasmaScene
 
  public function nextScene() {
      sfx.stop();
-     HXP.scene = new scenes.Level1();
+     cast(HXP.engine, Main).nextScreen();
  }
 
  public override function update() {

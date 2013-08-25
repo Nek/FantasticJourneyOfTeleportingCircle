@@ -9,7 +9,7 @@ import com.haxepunk.HXP;
 
 class Spike extends Entity
 {
-    private var speed = 250;
+    private var speed = 250.0;
 
     public function new(x:Int, y:Int, speed)
     {
