@@ -27,15 +27,11 @@ class GameOver extends PlasmaScene
 
     }
 
-
-
     public override function begin()
     {
         super.begin();
         add(new Skull(Math.round(HXP.halfWidth), Math.round(HXP.halfHeight)));
     }
-
-
 
     public function nextScene() {
     }
