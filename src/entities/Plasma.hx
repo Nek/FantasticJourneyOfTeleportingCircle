@@ -1,5 +1,6 @@
 package entities;
 
+import flash.geom.Matrix;
 import flash.geom.ColorTransform;
 import flash.geom.Point;
 import flash.geom.Rectangle;
@@ -14,23 +15,37 @@ class Plasma extends Entity
 {
 
     private var canv: Canvas;
-    private var w = 640;
-    private var h = 480;
+    private var w = 320;
+    private var h = 240;
     private var t = 0;
+    private var octaves = 3;
+    private var speedMod = 1/3;
 
-    public function new(x:Int, y:Int)
+    public function new(x:Int, y:Int, octaves, speedMod)
     {
         super(x, y);
 
-        canv = new Canvas(w,h);
+        this.octaves = octaves;
+        this.speedMod = speedMod;
+
+        canv = new Canvas(w*2,h*2);
 
         addGraphic(canv);
         canv.x = -canv.width/2;
         canv.y = -canv.height/2;
 
+
+        matrix = new Matrix();
+        matrix.scale(scale, scale);
+        resized = new BitmapData(640, 480, true, 0x000000);
+
         initPlasma();
 
     }
+
+    private var scale:Float = 2;
+    private var matrix:Matrix;
+    private var resized:BitmapData;
 
     public override function update() {
         super.update();
@@ -38,11 +53,12 @@ class Plasma extends Entity
 
         if (t == 0) {
             updatePlasma();
-            canv.draw(0,0,canvas);
+            resized.draw(canvas, matrix, null, null, null, true);
+            canv.draw(0,0,resized);
+            t = 2;
         }
 
-        t += 1;
-        t = t % 4;
+        t -= 1;
     }
 
     private var canvas:BitmapData;
@@ -87,7 +103,7 @@ class Plasma extends Entity
         PointArrayA = [];
         PointArrayB = [];
         for (i in 0...3) {
-            PointArrayA[i] = new Point(Math.random() * w,Math.random() * h);
+            PointArrayA[i] = new Point(Math.random() * w, Math.random() * h);
             PointArrayB[i] = new Point(Math.random() * 10 - 5, Math.random() * 10 - 5);
         }
         canvas = new BitmapData(w, h, false, 0x00FF0000);
@@ -97,11 +113,11 @@ class Plasma extends Entity
 //random = Math.random() * 10000
         var i:Int = 0;
         while (i < 3) {
-            PointArrayA[i].x = PointArrayA[i].x + PointArrayB[i].x;
-            PointArrayA[i].y = PointArrayA[i].y + PointArrayB[i].y;
+            PointArrayA[i].x = PointArrayA[i].x + (PointArrayB[i].x * this.speedMod);
+            PointArrayA[i].y = PointArrayA[i].y + (PointArrayB[i].y * this.speedMod);
             ++i;
         }
-        canvas.perlinNoise(w, h, 3  /* +Std.int (mouseX / 100)*/, random, false, true, 1, false, PointArrayA);
+        canvas.perlinNoise(w, h, this.octaves  /* +Std.int (mouseX / 100)*/, random, false, true, 1, false, PointArrayA);
         canvas.copyChannel (canvas, canvas.rect, canvas.rect.topLeft, 1, 2);
         canvas.copyChannel (canvas, canvas.rect, canvas.rect.topLeft, 1, 4);
         canvas.colorTransform (canvas.rect, ct);
