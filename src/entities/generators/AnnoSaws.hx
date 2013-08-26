@@ -15,7 +15,7 @@ class AnnoSaws extends Entity
 
     private var spikeAttack:Alarm;
     private var speed = 200.0;
-    private var increase = 20.0;
+    private var increase = 0.0;
     private var circle:Circle;
 
     public function new(interval, speed, increase, circle)

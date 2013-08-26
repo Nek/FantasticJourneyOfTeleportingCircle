@@ -24,11 +24,15 @@ class Main extends Engine
 //            Level([HeadSpikes(.2,200,20)], 10), // 1
 
 //            Hint(["csaw"],"aumloop"),
-//            Level([CenterSaws(.4,100,0)],8.0), // 2
 //            Level([CenterSaws(.4,100,5)],8.0), // 2
-            Level([SmartSaws(.4,100,5)],8.0), // 2
+//            Level([CenterSaws(.3,100,5)],8.0), // 3
+//            Level([SmartSaws(.3,100,10)],8.0), // 4
+
+//            Hint(["asaw"],"aumloop"),
+//            Level([AnnoSaws(.2,80,0)], 4.0), // 3
+//            Level([AnnoSaws(.15,80,0)], 4.0), // 3
+            Level([AnnoSaws(.15,80,2)], 4.0), // 3
 //            Level([SmartSaws(.2,100,0)]), // 3
-//            Level([AnnoSaws(.4,200,0)]), // 4
 //            Level([CenterSaws(.2,150,0), HeadSpikes(.4,50 ,10)]), // 5
 
 //                GameOver,
