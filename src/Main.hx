@@ -18,24 +18,25 @@ class Main extends Engine
 		HXP.console.enable();
 #end
         screens = [
-//            Hint(["01mouse", "spike"],"aumloop"),
-//            Level([HeadSpikes(.2,100,0)], 10), // 1
-//            Level([HeadSpikes(.2,150,10)], 10), // 1
-//            Level([HeadSpikes(.2,200,20)], 10), // 1
+            Hint(["01mouse", "spike"],"aumloop"),
+            Level([HeadSpikes(.2,100,0)], 10), // 1
+            Level([HeadSpikes(.2,150,10)], 10), // 1
+            Level([HeadSpikes(.2,150,20)], 10), // 1
 
-//            Hint(["csaw"],"aumloop"),
-//            Level([CenterSaws(.4,100,5)],8.0), // 2
-//            Level([CenterSaws(.3,100,5)],8.0), // 3
-//            Level([SmartSaws(.3,100,10)],8.0), // 4
+            Hint(["csaw"],"aumloop"),
+            Level([CenterSaws(.4,100,5)],8.0), // 2
+            Level([CenterSaws(.3,100,5)],8.0), // 3
+            Level([SmartSaws(.3,100,10)],8.0), // 4
 
-//            Hint(["asaw"],"aumloop"),
-//            Level([AnnoSaws(.2,80,0)], 4.0), // 3
-//            Level([AnnoSaws(.15,80,0)], 4.0), // 3
-            Level([AnnoSaws(.15,80,2)], 4.0), // 3
-//            Level([SmartSaws(.2,100,0)]), // 3
-//            Level([CenterSaws(.2,150,0), HeadSpikes(.4,50 ,10)]), // 5
+            Hint(["asaw"],"aumloop"),
+            Level([AnnoSaws(.2,80,0)], 4.0), // 3
+            Level([AnnoSaws(.15,80,0)], 4.0), // 3
+            Level([AnnoSaws(.15,80,2)], 4.0), // 5
 
-//                GameOver,
+            Hint(["death"],"aumloop"),
+
+//            Level([HeadSpikes(.2,100,0), CenterSaws(.4,100,5)], 2.0), // 5
+            Level([HeadSpikes(.3,100,0), CenterSaws(.3,100,0), AnnoSaws(.3,80,0)], 2.0), // 5
             GameWon
         ];
 

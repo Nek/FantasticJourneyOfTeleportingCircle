@@ -33,8 +33,8 @@ class GameOver extends PlasmaScene
     {
         super.begin();
         add(new Skull(Math.round(HXP.halfWidth), Math.round(HXP.halfHeight) - 50));
-        add(new Continue(100,340));
-        add(new Restart(540,340));
+        add(new Continue(520,360));
+        add(new Restart(120,360));
         var curs =  new Cursor(Math.round(HXP.width/2), Math.round(HXP.height/2));
         var circle:Circle = new Circle(Math.round(HXP.width/2), Math.round(HXP.height/2), curs, false);
         add(curs);

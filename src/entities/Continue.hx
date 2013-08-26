@@ -23,7 +23,7 @@ class Continue extends Entity
         graphic = img;
         graphic.x = -img.width/2;
         graphic.y = -img.height/2;
-        mask = new Hitbox(Math.round(img.width), Math.round(img.height), Math.round(-img.width/2), Math.round(-img.height/2));
+        mask = new Hitbox(100, 200, Math.round(-img.width/2) + 120, Math.round(-img.height/2 - 80));
 
     }
 
